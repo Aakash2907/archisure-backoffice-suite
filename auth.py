@@ -32,7 +32,7 @@ def decode_token(token):
 def login_required(*roles):
     """Require a valid JWT. If roles are given, only those roles (or admin) may pass."""
     def decorator(f):
-@wraps(f)
+        @wraps(f)
         def wrapped(*args, **kwargs):
             header = request.headers.get('Authorization', '')
             if not header.startswith('Bearer '):
