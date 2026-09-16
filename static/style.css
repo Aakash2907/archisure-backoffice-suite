@@ -122,7 +122,6 @@ canvas{max-height:260px;}
 
 .detail-panel{margin-top:1.25rem;background:white;border:1px solid var(--line);border-radius:6px;padding:1.25rem;}
 
-/* ---------- Modal ---------- */
 .modal-backdrop{
   position:fixed;inset:0;background:rgba(16,24,38,.5);display:flex;
   align-items:center;justify-content:center;z-index:50;
