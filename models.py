@@ -32,3 +32,55 @@ class Customer(db.Model):
     behaviors = db.relationship('CustomerBehavior', backref='customer', lazy=True,
                                  cascade='all, delete-orphan')
     policies = db.relationship('Policy', backref='customer', lazy=True,
+                                cascade='all, delete-orphan')
+
+
+class SmartDevice(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    customer_id = db.Column(db.Integer, db.ForeignKey('customer.id'), nullable=False)
+    device_type = db.Column(db.String(64))
+    status = db.Column(db.String(32), default='active')
+    last_activity = db.Column(db.DateTime, default=datetime.utcnow)
+
+
+class CustomerBehavior(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    customer_id = db.Column(db.Integer, db.ForeignKey('customer.id'), nullable=False)
+    action = db.Column(db.String(64))
+    service = db.Column(db.String(64))
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+
+
+class Policy(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    customer_id = db.Column(db.Integer, db.ForeignKey('customer.id'), nullable=False)
+    product = db.Column(db.String(64))
+    premium = db.Column(db.Float, default=0.0)
+    status = db.Column(db.String(32), default='active')
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    renewal_date = db.Column(db.DateTime)
+
+    payments = db.relationship('Payment', backref='policy', lazy=True,
+                                cascade='all, delete-orphan')
+
+
+class Payment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    policy_id = db.Column(db.Integer, db.ForeignKey('policy.id'), nullable=False)
+    amount = db.Column(db.Float)
+    date = db.Column(db.DateTime, default=datetime.utcnow)
+
+
+class Revenue(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    source = db.Column(db.String(64))
+    customer_id = db.Column(db.Integer, db.ForeignKey('customer.id'), nullable=True)
+    amount = db.Column(db.Float)
+    date = db.Column(db.DateTime, default=datetime.utcnow)
+
+
+class Cost(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    type = db.Column(db.String(32))  # personnel | maintenance | other
+    amount = db.Column(db.Float)
+    date = db.Column(db.DateTime, default=datetime.utcnow)
