@@ -33,3 +33,35 @@ def test_login_failure(client):
     res = client.post('/api/auth/login', json={'username': 'admin', 'password': 'wrong'})
     assert res.status_code == 401
 
+
+def test_dashboard_requires_auth(client):
+    res = client.get('/api/dashboard')
+    assert res.status_code == 401
+
+
+def test_dashboard_with_auth(client):
+    token = login(client)
+    res = client.get('/api/dashboard', headers={'Authorization': f'Bearer {token}'})
+    assert res.status_code == 200
+    data = res.get_json()
+    assert 'revenue' in data and 'profit' in data
+
+
+def test_customers_list(client):
+    token = login(client)
+    res = client.get('/api/customers', headers={'Authorization': f'Bearer {token}'})
+    assert res.status_code == 200
+    assert res.get_json()['total'] > 0
+
+
+def test_role_restriction(client):
+    token = login(client, 'customer1', 'customer123')
+    res = client.get('/api/costs', headers={'Authorization': f'Bearer {token}'})
+    assert res.status_code == 403
+
+
+def test_risk_score(client):
+    token = login(client)
+    res = client.get('/api/insurance/risk/1', headers={'Authorization': f'Bearer {token}'})
+    assert res.status_code == 200
+    assert 0 <= res.get_json()['risk_score'] <= 100
