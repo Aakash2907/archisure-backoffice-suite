@@ -1,5 +1,5 @@
 """
-Data model for the ArchiSurance-Lite CRM/Policy/Financial platform.
+Data model for the ArchiSure Back-Office Suite CRM/Policy/Financial platform.
 Each class below is the DB implementation of an ArchiMate element from the
 source flowchart (see README.md traceability table).
 """
