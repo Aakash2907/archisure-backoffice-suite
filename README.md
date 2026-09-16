@@ -1,22 +1,35 @@
-ArchiSurance-Lite
-A minimal but functional implementation of the ArchiMate-style business
-architecture diagram (Sales Target / Profitability / Revenue-Costs /
-Digital Customer Management / Smart Device Integration / Data-Driven
-Insurance / CRM / Shared Back Office / Policy Administration / Financial
-Services). Every element in the diagram is implemented as working code,
-not just displayed — see the traceability table below.
-Stack: Python (Flask + SQLite, one blueprint per concern) for the
-backend, vanilla JS + Chart.js for the frontend. No build step, no
-Node.js required — kept intentionally small.
-1. Architecture
-Code
-2. Repository structure
-Code
-3. Setup
+ArchiSure Back-Office Suite
+Description
+ArchiSure Back-Office Suite is a small, functional implementation of an ArchiMate-style
+business architecture diagram for an insurance company. Instead of just
+displaying the diagram, every element in it — business goals, drivers,
+capabilities, services, and applications — is implemented as working
+software: a REST API backed by a database, with role-based dashboards for
+CRM, policy administration, financial services, smart-device integration,
+customer-behavior analytics, and data-driven insurance risk scoring.
+The project is intentionally kept small (a handful of Python files and a
+single-page frontend) so it is easy to read, run, and demonstrate end to end.
+Technologies / Tools Used
+Backend: Python, Flask
+Database / ORM: SQLite, Flask-SQLAlchemy
+Authentication: JWT (PyJWT), role-based authorization
+Frontend: HTML, CSS, vanilla JavaScript, Chart.js (via CDN)
+Testing: pytest
+Version control: Git
+Installation and Running Instructions
+Clone the repository:
 Bash
-Open http://localhost:5000. The SQLite database and demo data are
-created automatically on first run — no manual DB setup needed. To
-reset, stop the server and delete archisurance.db.
+Create a virtual environment and activate it:
+Bash
+Install dependencies:
+Bash
+Run the application:
+Bash
+Open the app in a browser at http://localhost:5000.
+The SQLite database (archisure.db) and demo data are created and
+seeded automatically the first time the app runs — no manual database setup
+is required. To reset all data, stop the server and delete
+archisure.db, then restart.
 Demo accounts (seeded automatically)
 Username
 Password
@@ -36,122 +49,59 @@ Finance Manager
 customer1
 customer123
 Customer
-Configuration
-Environment variables (optional, all have safe defaults for local demo use):
-JWT_SECRET — signing key for tokens (set this in production)
-DATABASE_URL — SQLAlchemy URI, e.g. postgresql://user:pass@host/db to swap SQLite for PostgreSQL/MySQL
-4. Tests
-A lightweight smoke test suite is included:
+Configuration (optional)
+JWT_SECRET — signing key for tokens (set a real one before deploying beyond a demo)
+DATABASE_URL — SQLAlchemy URI, e.g. postgresql://user:pass@host/db, to swap SQLite for PostgreSQL/MySQL
+Running tests
 Bash
-5. Flowchart traceability
-Flowchart element
-Software module
-Database entity
-API
-UI
-Sales Target / Profitability / Revenue / Costs
-Dashboard KPI service
-Revenue, Cost
-/api/dashboard, /api/dashboard/trends
-Dashboard
-Increase Revenue / Reduce Costs
-Financial Service
-Revenue, Cost
-/api/financial/summary
-Financial
-Reduce Personnel Costs / Reduce Maintenance Costs
-Cost Management
-Cost (type=personnel/maintenance)
-/api/costs
-Financial
-Improve Customer Retention / Increase Market Share
-Customer + Dashboard KPIs
-Customer
-/api/dashboard, /api/customers/summary
-Dashboard
-Provide Competitive Premium Services
-Data-Driven Insurance
-Policy
-/api/insurance/risk/<id>
-Data-Driven Insurance
-Integrate with Smart Device / Support for Smart Device Integration
-Smart Device Integration
-SmartDevice
-/api/devices
-Smart Devices
-Improve Customer Interaction with Collected Data
-Behavior + Recommendations service
-CustomerBehavior
-/api/behaviors, /api/analytics/recommendations/<id>
-Analytics
-Utilize the Insights of Customer Behaviors
-Customer Behavior Analytics
-CustomerBehavior
-/api/analytics/behavior
-Analytics
-Digital Customer Management
+Project Structure and Module Purpose
+Code
+Module → API summary
+Module
+Endpoints
+What it does
 Customer Management
-Customer
-/api/customers, /api/customers/<id>
-Customers
-Data Driven Insurance
-Risk scoring service
-Customer, Policy, SmartDevice, CustomerBehavior
-/api/insurance/risk/<id>
-Data-Driven Insurance
-Maintain CRM Data Centrally / CRM Data Access
-CRM aggregation service
-Customer, Policy, SmartDevice, CustomerBehavior
+/api/customers, /api/customers/<id>, /api/customers/summary
+Register, search, and view customers; retention/satisfaction KPIs
+CRM Data Access
 /api/crm/customer/<id>
-Customers (detail view)
-Introduce the Common Use of Applications
-Shared services (auth, CRM access) reused by every module
-—
-auth.py, api.py shared helpers
-all pages
-Establish a Shared Back Office for All Products
-Back-office endpoints grouped under one API
-Policy, Revenue, Cost
-/api/policies, /api/financial/*
-Policies, Financial
-Support for Policy Administration / Policy Administration Services
+Aggregated view of a customer's policies, devices, and behavior in one call
+Smart Device Integration
+/api/devices
+Register, list, and remove smart devices linked to customers (simulated IoT)
+Customer Behavior Analytics
+/api/behaviors, /api/analytics/behavior, /api/analytics/recommendations/<id>
+Logs customer actions; produces action/service breakdowns, at-risk customers, and simple personalized recommendations
 Policy Administration
-Policy, Payment
 /api/policies, /api/policies/<id>/renew, /api/policies/<id>/cancel
-Policies
+Create, search, renew, and cancel insurance policies
 Financial Services
-Financial Service
-Revenue, Cost, Payment
-/api/revenue, /api/costs, /api/payments
-Financial
-General CRM System
-Implemented as the app's own CRM layer (models + /api/crm/*)
-Customer, Policy, SmartDevice, CustomerBehavior
-/api/crm/customer/<id>
-Customers
-ArchiSurance Back Office Suite
-Implemented as the Policy + Financial modules together
-Policy, Payment, Revenue, Cost
-/api/policies, /api/financial/*
-Policies, Financial
-6. Roles
-Role
-Access
-Admin
-Everything
-CRM Manager
-Customers, devices, analytics
-Policy Officer
-Policies, customers (read), risk scoring
-Finance Manager
-Revenue, costs, financial summary, customer summary
-Customer
-Own profile, own policies, own devices (read-only)
-7. Notes
-The risk score and market share figures are transparent,
-rule-based demonstration values — explicitly not real insurance
-underwriting or market research.
-Smart device data is simulated (no real IoT hardware).
-This project is intentionally compact for an academic/demo setting;
-swap DATABASE_URL to Postgres/MySQL and set a real JWT_SECRET for
-anything beyond a demo.
+/api/revenue, /api/costs, /api/payments, /api/financial/summary
+Records revenue/costs/payments; computes profit and profit margin
+Data-Driven Insurance
+/api/insurance/risk/<id>
+Transparent, rule-based risk score and recommended premium (demo only, not real underwriting)
+Main Dashboard
+/api/dashboard, /api/dashboard/trends
+Sales target, revenue, costs, profit, satisfaction, retention, market share, and 6-month trends
+Sample Input and Output
+1. Login
+Request:
+Http
+Response:
+Json
+2. Dashboard KPIs (using the token from step 1)
+Request:
+Http
+Response:
+Json
+3. Data-driven insurance risk score
+Request:
+Http
+Response:
+Json
+4. Creating a new policy
+Request:
+Http
+Response:
+Json
