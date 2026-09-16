@@ -1,5 +1,5 @@
 """
-ArchiSurance-Lite — entrypoint.
+ArchiSure Back-Office Suite — entrypoint.
 Run:  python app.py   (see README.md)
 """
 import os
@@ -15,7 +15,7 @@ from seed import seed
 def create_app():
     app = Flask(__name__, static_folder='static', static_url_path='')
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
-        'DATABASE_URL', 'sqlite:///archisurance.db')
+        'DATABASE_URL', 'sqlite:///archisure.db')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['JWT_SECRET'] = os.environ.get('JWT_SECRET', 'dev-secret-change-me')
 
