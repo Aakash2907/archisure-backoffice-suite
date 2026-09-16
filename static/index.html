@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ArchiSurance-Lite</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen" class="login-screen">
+  <form id="login-form" class="login-card">
+    <h1>ArchiSurance<span>-Lite</span></h1>
+    <p class="tagline">CRM · Policy · Financial platform</p>
+    <label>Username</label>
+    <input id="login-username" required autocomplete="username" value="admin">
+    <label>Password</label>
+    <input id="login-password" type="password" required autocomplete="current-password" value="admin123">
+    <button type="submit">Sign in</button>
+    <p id="login-error" class="error"></p>
+    <p class="hint">Try admin/admin123, crm_manager/crm123, policy_officer/policy123,
+      finance_manager/finance123 or customer1/customer123.</p>
+  </form>
+</div>
+
+<!-- APP -->
+<div id="app" class="app hidden">
+  <aside class="sidebar">
+    <div class="brand">ArchiSurance<span>-Lite</span></div>
+    <nav id="nav">
+      <button data-view="dashboard" class="active">Dashboard</button>
+      <button data-view="customers">Customers</button>
