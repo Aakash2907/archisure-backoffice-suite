@@ -125,3 +125,47 @@ The project provides demonstration accounts and a `/demo/accounts` endpoint for 
 | Vercel Python Functions | Backend API deployment |
 
 ---
+
+
+4.Project Structure 
+archisure-backoffice-suite/
+│
+├── api/
+│   └── index.py
+│
+├── backend/
+│   ├── requirements.txt
+│   ├── run.py
+│   │
+│   └── app/
+│       ├── __init__.py
+│       ├── main.py
+│       ├── deps.py
+│       ├── schemas.py
+│       ├── system.py
+│       │
+│       └── core/
+│           ├── auth.py
+│           ├── audit.py
+│           ├── crypto_utils.py
+│           ├── rbac.py
+│           ├── release_control.py
+│           └── storage.py
+│
+├── frontend/
+│   ├── index.html
+│   ├── package.json
+│   ├── vite.config.js
+│   │
+│   └── src/
+│       ├── main.jsx
+│       ├── App.jsx
+│       ├── api.js
+│       ├── styles.css
+│       │
+│       └── components/
+│           └── ...
+│
+├── requirements.txt
+├── vercel.json
+└── README.md
