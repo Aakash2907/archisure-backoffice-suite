@@ -25,7 +25,9 @@ export default function LoginForm({ onLogin }) {
     } finally {
       setBusy(false);
     }
-  }function fillDemo(name, info) {
+  }
+
+  function fillDemo(name, info) {
     setUsername(name);
     setPassword(info.password);
     setTotpCode(info.current_totp_code);
@@ -51,7 +53,7 @@ export default function LoginForm({ onLogin }) {
 
         {error && <p className="error">{error}</p>}
         <button type="submit" disabled={busy}>{busy ? "Signing in..." : "Sign in"}</button>
-    </form>
+      </form>
 
       {demoAccounts && (
         <div className="demo-box">
