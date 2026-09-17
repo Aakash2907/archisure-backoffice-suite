@@ -1,109 +1,127 @@
-ArchiSure Back-Office Suite
-Description
-ArchiSure Back-Office Suite is a small, functional implementation of an ArchiMate-style
-business architecture diagram for an insurance company. Instead of just
-displaying the diagram, every element in it — business goals, drivers,
-capabilities, services, and applications — is implemented as working
-software: a REST API backed by a database, with role-based dashboards for
-CRM, policy administration, financial services, smart-device integration,
-customer-behavior analytics, and data-driven insurance risk scoring.
-The project is intentionally kept small (a handful of Python files and a
-single-page frontend) so it is easy to read, run, and demonstrate end to end.
-Technologies / Tools Used
-Backend: Python, Flask
-Database / ORM: SQLite, Flask-SQLAlchemy
-Authentication: JWT (PyJWT), role-based authorization
-Frontend: HTML, CSS, vanilla JavaScript, Chart.js (via CDN)
-Testing: pytest
-Version control: Git
-Installation and Running Instructions
-Clone the repository:
-Bash
-Create a virtual environment and activate it:
-Bash
-Install dependencies:
-Bash
-Run the application:
-Bash
-Open the app in a browser at http://localhost:5000.
-The SQLite database (archisure.db) and demo data are created and
-seeded automatically the first time the app runs — no manual database setup
-is required. To reset all data, stop the server and delete
-archisure.db, then restart.
-Demo accounts (seeded automatically)
-Username
-Password
-Role
-admin
-admin123
-Admin (full access)
-crm_manager
-crm123
-CRM Manager
-policy_officer
-policy123
-Policy Officer
-finance_manager
-finance123
-Finance Manager
-customer1
-customer123
-Customer
-Configuration (optional)
-JWT_SECRET — signing key for tokens (set a real one before deploying beyond a demo)
-DATABASE_URL — SQLAlchemy URI, e.g. postgresql://user:pass@host/db, to swap SQLite for PostgreSQL/MySQL
-Running tests
-Bash
-Project Structure and Module Purpose
-Code
-Module → API summary
-Module
-Endpoints
-What it does
-Customer Management
-/api/customers, /api/customers/<id>, /api/customers/summary
-Register, search, and view customers; retention/satisfaction KPIs
-CRM Data Access
-/api/crm/customer/<id>
-Aggregated view of a customer's policies, devices, and behavior in one call
-Smart Device Integration
-/api/devices
-Register, list, and remove smart devices linked to customers (simulated IoT)
-Customer Behavior Analytics
-/api/behaviors, /api/analytics/behavior, /api/analytics/recommendations/<id>
-Logs customer actions; produces action/service breakdowns, at-risk customers, and simple personalized recommendations
-Policy Administration
-/api/policies, /api/policies/<id>/renew, /api/policies/<id>/cancel
-Create, search, renew, and cancel insurance policies
-Financial Services
-/api/revenue, /api/costs, /api/payments, /api/financial/summary
-Records revenue/costs/payments; computes profit and profit margin
-Data-Driven Insurance
-/api/insurance/risk/<id>
-Transparent, rule-based risk score and recommended premium (demo only, not real underwriting)
-Main Dashboard
-/api/dashboard, /api/dashboard/trends
-Sales target, revenue, costs, profit, satisfaction, retention, market share, and 6-month trends
-Sample Input and Output
-1. Login
-Request:
-Http
-Response:
-Json
-2. Dashboard KPIs (using the token from step 1)
-Request:
-Http
-Response:
-Json
-3. Data-driven insurance risk score
-Request:
-Http
-Response:
-Json
-4. Creating a new policy
-Request:
-Http
-Response:
-Json
+ArchiSure Backoffice Suite
 
-vercel link:https://vercel.com/aakash-1b9b/archisure-backoffice-suite
+## Secure Management of Competitive Examination Question Papers
+
+ArchiSure Backoffice Suite is a secure cloud-ready question-paper management system designed to protect sensitive competitive examination question papers throughout their lifecycle.
+
+The system provides controlled authentication, role-based access control, encrypted question-paper storage, release policies, multi-role approval workflows, secure retrieval, and audit-integrity verification.
+
+The application is designed to reduce the risk of unauthorized access, modification, premature release, and leakage of examination question papers.
+
+---
+
+## 1. Project Description
+
+Competitive examination question papers are highly sensitive documents. They may be exposed through unauthorized access, insider threats, insecure storage, accidental disclosure, or compromised systems.
+
+ArchiSure addresses these risks by providing a controlled digital workflow for:
+
+- User authentication
+- Role-based access control
+- Secure question-paper upload
+- Encrypted question-paper storage
+- Release-policy management
+- Question-paper approval
+- Controlled paper retrieval
+- Audit logging
+- Audit-integrity verification
+- Time-based TOTP authentication
+- Demonstration accounts for testing
+
+The backend is implemented using **FastAPI**, while the frontend is implemented using **React + Vite**.
+
+---
+
+# 2. Key Features
+
+### Authentication
+
+- User registration
+- Username/password authentication
+- TOTP-based second-factor authentication
+- Token-based authenticated API access
+
+### Role-Based Access Control
+
+The system supports different roles for different examination-management responsibilities, including:
+
+- `QUESTION_SETTER`
+- `RELEASE_APPROVER`
+- `EXAM_CENTER_OPERATOR`
+- `AUDITOR`
+
+### Secure Question-Paper Management
+
+- Upload examination question papers
+- Encrypt stored paper data
+- Maintain controlled access to papers
+- Retrieve papers only through authorized workflows
+
+### Release Control
+
+- Configure release policies
+- Require approval before release
+- Control when papers can be released
+
+### Approval Workflow
+
+- Submit papers for approval
+- Approve question papers
+- Track paper status
+
+### Audit
+
+- Record security-sensitive operations
+- Retrieve audit information
+- Verify audit-log integrity
+
+### Demo Mode
+
+The project provides demonstration accounts and a `/demo/accounts` endpoint for testing authentication and TOTP functionality.
+
+> The demo-account endpoint is intended for development/testing and should be disabled or protected before production deployment.
+
+---
+
+# 3. Technologies and Tools Used
+
+## Frontend
+
+| Technology | Purpose |
+|---|---|
+| React | User interface |
+| Vite | Frontend development and build tool |
+| JavaScript / JSX | Frontend implementation |
+| CSS | User interface styling |
+
+## Backend
+
+| Technology | Purpose |
+|---|---|
+| Python | Backend programming language |
+| FastAPI | REST API framework |
+| Uvicorn | ASGI server |
+| Pydantic | Request/response validation |
+| Cryptography | Encryption and secure cryptographic operations |
+
+## Security
+
+| Technology / Mechanism | Purpose |
+|---|---|
+| Password authentication | User authentication |
+| TOTP | Time-based second-factor authentication |
+| RBAC | Role-based authorization |
+| Encryption | Protection of stored question papers |
+| Audit logging | Security activity tracking |
+| Integrity verification | Detection of audit-data modification |
+
+## Deployment
+
+| Tool | Purpose |
+|---|---|
+| Vercel | Cloud deployment |
+| GitHub | Source-code management |
+| Vite | Production frontend build |
+| Vercel Python Functions | Backend API deployment |
+
+---
