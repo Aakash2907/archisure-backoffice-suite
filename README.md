@@ -128,3 +128,6 @@ The project provides demonstration accounts and a `/demo/accounts` endpoint for 
 
 
 VERCEL LINK:https://archisure-backoffice-suite.vercel.app/
+
+
+DEPLOYMENT VIDEO:https://drive.google.com/drive/folders/1504ctE6bDKzrD4JeAjhELSR8bDbZt37u
